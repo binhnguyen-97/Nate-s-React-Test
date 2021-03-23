@@ -1,22 +1,7 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import styled from 'styled-components'
-
-const AddTodo = ({ onAddTodo }) => {
-  const handleKeyPress = e => {
-    if (e.key === 'Enter') {
-      onAddTodo(e.target.value)
-    }
-  }
-
-  return (
-    <Input
-      type='text'
-      onKeyPress={handleKeyPress}
-      placeholder='Add new todo...'
-    />
-  )
-}
+import styled from 'styled-components';
 
 const Input = styled.input`
   background: #3b4049;
@@ -33,5 +18,31 @@ const Input = styled.input`
     color: #8d96a8;
   }
 `
+
+const AddTodo = ({ onAddTodo, placeHolder }) => {
+  const handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      onAddTodo(e.target.value)
+      e.target.value = '';
+    }
+  }
+
+  return (
+    <Input
+      type='text'
+      onKeyPress={handleKeyPress}
+      placeholder={placeHolder || 'Add new todo...'}
+    />
+  )
+};
+
+AddTodo.propTypes = {
+  onAddTodo: PropTypes.func.isRequired,
+  placeHolder: PropTypes.string,
+};
+
+AddTodo.defaultProps = {
+  placeHolder: 'Add new todo...'
+};
 
 export default AddTodo
